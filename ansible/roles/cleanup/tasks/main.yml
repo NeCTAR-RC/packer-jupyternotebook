@@ -1,0 +1,21 @@
+---
+- name: set distro-specific variables
+  include_vars: '{{ item }}'
+  with_first_found:
+    - '{{ ansible_distribution }}.yml'
+    - '{{ ansible_os_family }}.yml'
+    - default.yml
+
+- name: Clean up logs keys and configs
+  shell: "{{ item }}"
+  args:
+    warn: no
+  with_items:
+    - 'find /var/log -type f -exec bash -c ''cat /dev/null > {}'' \;'
+    - 'rm -fr /var/log/journal/*'
+    - 'rm -fr /var/lib/cloud/*'
+    - 'rm -fr /home/{{ default_user }}/.ssh/*'
+    - 'rm -fr /etc/ssh/*key'
+    - 'rm -fr /root/.ssh'
+    - 'rm -fr /root/*.cfg'
+  when: nectar_test_build is not defined

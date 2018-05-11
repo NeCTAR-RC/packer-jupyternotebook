@@ -1,0 +1,27 @@
+---
+- name: Install Jupyter notebook packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ jupyter_notebook_packages }}"
+ 
+- name: Install Jupyter notebook config
+  template:
+    src: jupyter_notebook_config.py.j2
+    dest: /etc/jupyter/jupyter_notebook_config.py
+
+- name: "Create Jupyter notebook directory (as {{ ansible_user }})"
+  become: false
+  command: "mkdir -p ~/{{ jupyter_notebook_notebookapp_notebook_dir }}"
+  when: jupyter_notebook_notebookapp_notebook_dir is defined
+
+- name: "Allow systemd lingering for user {{ ansible_user }}"
+  command: "loginctl enable-linger {{ ansible_user }}"
+
+- name: "Enable and start service (as {{ ansible_user }})"
+  become: false
+  service:
+    name: jupyter-notebook
+    enabled: yes
+    state: started
+    user: yes

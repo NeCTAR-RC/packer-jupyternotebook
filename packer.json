@@ -1,0 +1,24 @@
+{
+  "builders": [
+    {
+      "type": "openstack",
+      "flavor": "m2.xsmall",
+      "image_name": "NeCTAR Jupyter Notebook (Ubuntu 18.04 LTS Bionic)",
+      "source_image": "",
+      "availability_zone": "melbourne-qh2",
+      "ssh_username": "ubuntu"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "ansible/playbook.yml"
+    },
+    {
+      "type": "shell",
+      "execute_command": "{{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "script": "scripts/cleanup.sh"
+    }
+  ]
+}
+

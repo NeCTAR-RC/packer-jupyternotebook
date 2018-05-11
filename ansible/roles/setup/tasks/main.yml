@@ -1,0 +1,4 @@
+---
+- include: apt_setup.yml
+- include: etc_hosts.yml
+- include: timezone.yml
