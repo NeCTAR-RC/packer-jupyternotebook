@@ -1,4 +1,6 @@
 ---
+jupyter_user: "{{ ansible_env.SUDO_USER }}"
+
 jupter_notebook_port: 8888
 
 jupyter_notebook_packages:
