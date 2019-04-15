@@ -11,17 +11,19 @@
     dest: /etc/jupyter/jupyter_notebook_config.py
 
 - name: "Create Jupyter notebook directory (as {{ jupyter_user }})"
-  become: false
   command: "mkdir -p ~/{{ jupyter_notebook_notebookapp_notebook_dir }}"
+  args:
+    warn: false
+  become: false
   when: jupyter_notebook_notebookapp_notebook_dir is defined
 
 - name: "Allow systemd lingering for user {{ jupyter_user }}"
   command: "loginctl enable-linger {{ jupyter_user }}"
 
 - name: "Enable and start service (as {{ jupyter_user }})"
-  become: false
+  become_user: "{{ jupyter_user }}"
   service:
     name: jupyter-notebook
     enabled: yes
     state: started
-    user: yes
+    scope: user

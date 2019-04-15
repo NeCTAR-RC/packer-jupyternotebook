@@ -16,29 +16,20 @@ fi
 export OS_TENANT_NAME=$OS_PROJECT_NAME
 export OS_DOMAIN_NAME=$OS_PROJECT_DOMAIN_NAME
 
-# Find packer
-if which packer >/dev/null 2>&1; then
-    PACKER=packer
-elif which packer-io >/dev/null 2>&1; then
-    PACKER=packer-io
-else
-    echo "You need packer installed to use this tool"
-    exit 1
-fi
-
 FILE=packer
 NAME=$(jq -r '.builders[0].image_name' ${FILE}.json)
 BUILD_NUMBER=$(date "+%Y%m%d%H%M")
 BUILD_NAME="${FILE}_build_${BUILD_NUMBER}"
 
-# Get the latest Xenial Murano image
-SOURCE_ID=$(openstack image list --limit 100 --long -f value -c ID -c Project --property 'name=NeCTAR Ubuntu 18.04 LTS (Bionic) amd64 (pre-installed murano-agent)' | grep 1fe7dcac580443a4818d10d18151e42f | cut -d' ' -f1)
+# Get the latest Bionic Murano image
+IMAGE_NAME='NeCTAR Ubuntu 18.04 LTS (Bionic) amd64 (pre-installed murano-agent'
+SOURCE_ID=$(openstack image show -f value -c id "$IMAGE_NAME")
 
 # Update the name to include build number
 jq ".builders[0].source_image = \"${SOURCE_ID}\" | .builders[0].image_name = \"${BUILD_NAME}\"" ${FILE}.json > /tmp/${BUILD_NAME}_real.json
 
 echo "Building image ${NAME}..."
-${PACKER} build /tmp/${BUILD_NAME}_real.json
+packer build /tmp/${BUILD_NAME}_real.json
 rm /tmp/${BUILD_NAME}_real.json
 
 openstack image save --file ${BUILD_NAME}_large.qcow2 ${BUILD_NAME}

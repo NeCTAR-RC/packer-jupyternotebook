@@ -7,9 +7,10 @@
     - vars/main.yml
 
   roles:
+    - role: default_user
     - role: setup
     - role: nginx
-    - role: config
+    - role: certbot
     - role: jupyter-notebook
     - role: facts
     - role: cleanup
