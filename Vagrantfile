@@ -7,6 +7,9 @@ Vagrant.configure("2") do |config|
       override.vm.box = "generic/ubuntu1804"
     end
 
+    # Fix Weird DNS set in libvirt box
+    c.vm.provision "shell", inline: "sed -i 's/^DNS=.*/DNS=1.1.1.1/g' /etc/systemd/resolved.conf; systemctl restart systemd-resolved"
+
     c.vm.provision "ansible" do |ansible|
       ansible.extra_vars = { nectar_test_build: true,
                              ansible_python_interpreter: "/usr/bin/python3" }

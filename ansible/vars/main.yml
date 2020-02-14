@@ -1,4 +1,7 @@
 ---
+# Application name for final image
+application_name: Jupyter Notebook
+
 # Save these vars for setting as image properties
 facts: []
 
