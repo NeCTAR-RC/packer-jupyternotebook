@@ -22,7 +22,7 @@ BUILD_NUMBER=$(date "+%Y%m%d%H%M")
 BUILD_NAME="${FILE}_build_${BUILD_NUMBER}"
 
 # Get the latest Bionic Murano image
-IMAGE_NAME='NeCTAR Ubuntu 18.04 LTS (Bionic) amd64 (pre-installed murano-agent'
+IMAGE_NAME='NeCTAR Ubuntu 18.04 LTS (Bionic) amd64'
 SOURCE_ID=$(openstack image show -f value -c id "$IMAGE_NAME")
 
 # Update the name to include build number
