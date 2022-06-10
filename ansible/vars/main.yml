@@ -1,6 +1,6 @@
 ---
 # Application name for final image
-application_name: Jupyter Notebook
+application_name: Jupyter Lab
 
 # Save these vars for setting as image properties
 facts: []
@@ -23,5 +23,10 @@ nginx_vhosts:
         proxy_set_header Connection "upgrade";
         proxy_read_timeout 86400;
       }
+
+anaconda_make_sys_default: True
+anaconda_dep_pkgs:
+  - python3-distutils
+
 
 # vim: syntax=yaml

@@ -12,6 +12,7 @@
     - setup
     - nginx
     - certbot
-    - jupyter-notebook
+    - anaconda
+    - jupyter-lab
     - facts
     - cleanup
