@@ -13,6 +13,6 @@
     - nginx
     - certbot
     - anaconda
-    - jupyter-lab
+    - jupyterlab
     - facts
     - cleanup

@@ -29,8 +29,8 @@
 
 - name: Install Jupyter Lab systemd service
   template:
-    src: jupyter-lab.service.j2
-    dest: /etc/systemd/user/jupyter-lab.service
+    src: jupyterlab.service.j2
+    dest: /etc/systemd/user/jupyterlab.service
 
 - name: "Create Jupyter Lab directory (as {{ jupyter_user }})"
   file:
@@ -50,7 +50,7 @@
 
 - name: "Enable and start service (as {{ jupyter_user }})"
   service:
-    name: jupyter-lab
+    name: jupyterlab
     enabled: yes
     state: restarted
     scope: user

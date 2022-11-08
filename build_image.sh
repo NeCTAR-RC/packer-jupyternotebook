@@ -20,10 +20,13 @@ FILE=packer
 NAME=$(jq -r '.builders[0].image_name' ${FILE}.json)
 BUILD_NUMBER=$(date "+%Y%m%d%H%M")
 BUILD_NAME="${FILE}_build_${BUILD_NUMBER}"
+FACT_DIR=ansible/.facts
 
 # Get the latest Bionic Murano image
-IMAGE_NAME='NeCTAR Ubuntu 18.04 LTS (Bionic) amd64'
+IMAGE_NAME='NeCTAR Ubuntu 22.04 LTS (Jammy) amd64'
 SOURCE_ID=$(openstack image show -f value -c id "$IMAGE_NAME")
+
+mkdir -p $FACT_DIR
 
 # Update the name to include build number
 jq ".builders[0].source_image = \"${SOURCE_ID}\" | .builders[0].image_name = \"${BUILD_NAME}\"" ${FILE}.json > /tmp/${BUILD_NAME}_real.json
@@ -44,7 +47,6 @@ if [ "${BUILD_PROPERTY}" != "" ] ; then
 fi
 
 # Discover facts to set as image properties
-FACT_DIR=ansible/.facts
 for FACT in $(ls $FACT_DIR); do
     VAL=$(cat $FACT_DIR/$FACT)
     GLANCE_ARGS="--property ${FACT}=${VAL} "

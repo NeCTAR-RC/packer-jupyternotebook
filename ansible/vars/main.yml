@@ -1,6 +1,6 @@
 ---
 # Application name for final image
-application_name: Jupyter Lab
+application_name: JupyterLab
 
 # Save these vars for setting as image properties
 facts: []

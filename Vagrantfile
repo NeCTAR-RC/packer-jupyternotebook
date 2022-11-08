@@ -2,9 +2,9 @@ Vagrant.configure("2") do |config|
 
   # Ubuntu 18.04 (bionic)
   config.vm.define "jupyterlab" do |c|
-    c.vm.box = "ubuntu/bionic64"
+    c.vm.box = "ubuntu/jammy64"
     config.vm.provider "libvirt" do |v, override|
-      override.vm.box = "generic/ubuntu1804"
+      override.vm.box = "generic/ubuntu2204"
     end
 
     # Fix Weird DNS set in libvirt box

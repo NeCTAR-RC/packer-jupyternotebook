@@ -4,7 +4,36 @@ jupyter_user: "{{ ansible_env.SUDO_USER }}"
 jupter_lab_port: 8888
 
 jupyter_lab_packages:
+  - notebook
   - jupyterlab
+  - altair
+  - beautifulsoup4
+  - bokeh
+  - bottleneck
+  - cloudpickle
+  - cython
+  - dask
+  - dill
+  - h5py
+  - ipympl
+  - ipywidgets
+  - matplotlib-base
+  - numba
+  - numexpr
+  - openpyxl
+  - pandas
+  - patsy
+  - protobuf
+  - pytables
+  - scikit-image
+  - scikit-learn
+  - scipy
+  - seaborn
+  - sqlalchemy
+  - statsmodels
+  - sympy
+  - widgetsnbextension
+  - xlrd
 
 jupyter_lab_config_file: /etc/jupyter/jupyter_notebook_config.py
 jupyter_lab_password_hash: 'sha1:a1b627397e5d:8b82241b80f84032fd950cecdbffcbf2c9a4bb04'  # nectar

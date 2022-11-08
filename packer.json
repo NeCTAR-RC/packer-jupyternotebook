@@ -2,10 +2,10 @@
   "builders": [
     {
       "type": "openstack",
-      "flavor": "t3.small",
-      "image_name": "NeCTAR Jupyter Lab (Ubuntu 18.04 LTS Bionic)",
+      "flavor": "m3.small",
+      "image_name": "NeCTAR JupyterLab",
       "source_image": "",
-      "availability_zone": "melbourne-qh2",
+      "availability_zone": "coreservices",
       "ssh_username": "ubuntu",
       "security_groups": ["image-build"]
     }
@@ -13,6 +13,11 @@
   "provisioners": [
     {
       "type": "ansible",
+      "use_proxy": "false",
+      "extra_arguments": [
+        "--ssh-extra-args", "-o IdentitiesOnly=yes",
+        "--extra-vars", "ansible_python_interpreter=/usr/bin/python3 image_build_dir='{{pwd}}/output-{{build_name}}'"
+      ],
       "playbook_file": "ansible/playbook.yml"
     },
     {
